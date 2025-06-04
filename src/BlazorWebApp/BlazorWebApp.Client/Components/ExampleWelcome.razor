@@ -1,0 +1,28 @@
+﻿@using System.Net.Http.Json
+@inject HttpClient Http
+
+<header class="p-4 text-center">
+    @if (isLoading)
+    {
+        <h2>Getting welcome…</h2>
+    }
+    else if (response is not null)
+    {
+        <h2>@response.WelcomeText</h2>
+    }
+</header>
+
+@code {
+    private TestResponse? response;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // You can set the name to anything you'd like
+        var name = "Rob";
+        var uri = $"api/test?Name={Uri.EscapeDataString(name)}";
+
+        response = await Http.GetFromJsonAsync<TestResponse>(uri);
+        isLoading = false;
+    }
+}

@@ -1,0 +1,97 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<HeadContent>
+    <link rel="stylesheet" href="@Assets["/lib/bootstrap/css/bootstrap.min.css"]" />
+</HeadContent>
+
+<!--
+    MainLayout.razor
+    A responsive Bootstrap-based layout demonstrating common Blazor constructs:
+      • Navbar with NavLink (client-side routing)
+      • @Body placeholder for routed content
+      • Reusable Bootstrap container/grid
+      • Sticky footer
+      • Search EditForm demonstrating model binding & navigation
+-->
+
+<div class="d-flex flex-column min-vh-100">
+    <!-- =======  Top Navigation Bar  ======= -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+            <div class="container-fluid">
+                <!-- Brand / Home link -->
+                <a class="navbar-brand fw-bold" href="@NavigationManager.BaseUri">MyBlazorApp</a>
+
+                <!-- Mobile toggle button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">Home</NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="about">About</NavLink>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                More
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><NavLink class="dropdown-item" href="contacts">Contacts</NavLink></li>
+                                <li><NavLink class="dropdown-item" href="settings">Settings</NavLink></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="https://learn.microsoft.com/aspnet/core/blazor" target="_blank">Blazor Docs</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- === Blazor-powered search form === -->
+                    <EditForm Model="@_model" OnValidSubmit="OnSearch">
+                        <div class="d-flex align-items-center gap-2">
+                            <InputText @bind-Value="_model.Query" class="form-control" placeholder="Search" />
+                            <button type="submit" class="btn btn-outline-primary">Go</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- =======  Main Page Content  ======= -->
+    <main class="flex-grow-1 overflow-auto">
+        <div class="container py-4">
+            @Body
+        </div>
+    </main>
+
+    <!-- =======  Footer  ======= -->
+    <footer class="bg-light text-center py-3 mt-auto border-top small">
+        <div class="container">
+            <span class="text-muted">© @DateTime.Now.Year — MyBlazorApp</span>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private readonly SearchModel _model = new();
+
+    private void OnSearch()
+    {
+        if (!string.IsNullOrWhiteSpace(_model.Query))
+        {
+            var encoded = Uri.EscapeDataString(_model.Query);
+            NavigationManager.NavigateTo($"search?q={encoded}");
+        }
+    }
+
+    private class SearchModel
+    {
+        public string? Query { get; set; }
+    }
+}

@@ -1,0 +1,12 @@
+<Project>
+  <!-- Import modularised warning and packaging configurations -->
+  <Import Project="$(MSBuildThisFileDirectory)warnings.build.props" />
+  <Import Project="$(MSBuildThisFileDirectory)packaging.build.props" />
+
+  <PropertyGroup>
+    <!-- Build settings -->
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

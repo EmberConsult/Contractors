@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+
+    <!-- Font Awesome Core CSS -->
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/all.min.css"]">
+
+    <!-- Font Awesome extra styles - NOT included in all.min.css -->
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/thin.min.css"]">
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/light.min.css"]">
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/duotone.min.css"]">
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/sharp-thin.min.css"]">
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/sharp-light.min.css"]">
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/sharp-regular.min.css"]">
+    <link rel="stylesheet" href="@Assets["/lib/fontawesome/css/sharp-solid.min.css"]">
+
+    <!-- App Styles -->
+    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <link rel="stylesheet" href="@Assets["BlazorWebApp.Host.styles.css"]" />
+    <ImportMap />
+    <HeadOutlet @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
+</head>
+
+<body>
+    <Routes @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
+    <script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>

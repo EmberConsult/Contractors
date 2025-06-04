@@ -1,0 +1,47 @@
+﻿@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<button class="alert-btn" @onclick="ShowAlert">
+    Show alert
+</button>
+
+@code
+{
+    private IJSObjectReference? _module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Import the ES module once and run its initialisation logic
+            _module = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/ExampleComponent.razor.js");
+
+            await _module.InvokeVoidAsync("initialise");
+        }
+    }
+
+    private async Task ShowAlert()
+    {
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("showAlert",
+                "Hello from the JavaScript module!");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            try
+            {
+                // Tell the module to remove any JS-side listeners it registered
+                await _module.InvokeVoidAsync("dispose");
+            }
+            finally
+            {
+                await _module.DisposeAsync();
+            }
+        }
+    }
+}
