@@ -1,7 +1,6 @@
 <Project>
-  <!-- Import modularised warning and packaging configurations -->
+  <!-- Import modularised warning configurations -->
   <Import Project="$(MSBuildThisFileDirectory)warnings.build.props" />
-  <Import Project="$(MSBuildThisFileDirectory)packaging.build.props" />
 
   <PropertyGroup>
     <!-- Build settings -->
